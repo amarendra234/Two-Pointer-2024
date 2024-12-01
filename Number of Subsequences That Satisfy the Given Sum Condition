@@ -1,0 +1,31 @@
+class Solution {
+public:
+
+    const int MOD = 1000000007;
+    long long  find_total(int len){
+        if (len == 0) return 1; // Base case: 2^0 = 1
+         long long int half = find_total(len/ 2); // Recursive call
+        half = (half%MOD * half%MOD) % MOD;        // Square the result and take modulo
+        if (len % 2 != 0) {
+            half = (half%MOD * 2%MOD) % MOD;       // If n is odd, multiply by 2
+        }
+       return half;
+   }
+    int numSubseq(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        int i=0,j=nums.size()-1;
+        long long int res=0;
+        while(i<=j){
+            int sum=nums[i]+nums[j];
+            if(sum<=target){
+                int len=j-i;
+                long long int val=find_total(len);
+                res=(res%1000000007+val%1000000007)%1000000007;
+                i++;
+            }else{
+                j--;
+            }
+        }
+        return (int)res;
+    }
+};
