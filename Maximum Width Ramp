@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int max_last_index(int arr[],int key,int n){
+        int low=0,end=n-1;
+        int index=-1;
+        while(low<=end){
+            int mid=(low+end)/2;
+            if(arr[mid]<key){
+                end=mid-1;
+                
+            }else{
+               index=mid;
+               low=mid+1;
+            }
+
+        }
+        return index;
+    }
+    int maxWidthRamp(vector<int>& nums) {
+           int sorted_max_array[nums.size()];
+           int m_a_x=INT_MIN;
+           for(int i=nums.size()-1;i>=0;i--){
+              m_a_x=max(m_a_x,nums[i]);
+              sorted_max_array[i]=m_a_x;
+           }
+           int ans=INT_MIN;
+           for(int i=0;i<nums.size();i++){
+               int index=max_last_index(sorted_max_array,nums[i],nums.size());
+               ans=max(ans,index-i);
+           }
+           return ans;
+    }
+};
